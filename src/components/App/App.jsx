@@ -1,65 +1,46 @@
-import Description from "../Description/Description";
-import Feedback from "../Feedback/Feedback";
-import Options from "../Options/Options";
-import Notification from "../Notification/Notification";
+import axios from "axios";
 import { useState, useEffect } from "react";
 import css from './App.module.css'
+import fetchApi from "../../api/api";
+import SearchBar from "../SearchBar/SearchBar";
+import ImageGallery from "../ImageGallery/ImageGallery";
+import Loader from "../Loader/Loader";
+import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
+
 const App = () => {
-    const [clicks, setClicks] = useState(()=>{
-    const savedClicks = JSON.parse(localStorage.getItem("saved-clicks"));
-    if (savedClicks !== null) {
-      return savedClicks;
+    const [images, setImages] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
+  
+
+    const handleSearch = async (query, currentPage) => {
+        try {
+            setLoading(true)
+            //setImages([]);
+            const img = await fetchApi(query, currentPage);
+            setImages(img.data.results);
+        
+        }
+        catch {
+            setIsError(true)
+        }
+        finally {
+            setLoading(false)
+        }
     }
-    return(
-        {good: 0,
-	neutral: 0,
-	bad: 0,
-    })
-    });
-
-    useEffect(() => {
-    localStorage.setItem("saved-clicks", JSON.stringify(clicks));
-    }, [clicks]);
-    
-    const updateFeedback = feedbackType  => {
-        setClicks({
-            ...clicks,
-            [feedbackType ]: clicks[feedbackType] + 1,
-        });
-
-    }
-     const resetFunction = ()  => {
-         setClicks({ good: 0,
-	neutral: 0,
-	bad: 0,})
-
-    }
-    
-
-    const totalFeedback = clicks.good + clicks.neutral + clicks.bad;
-    const positivePercent = Math.round((clicks.good / totalFeedback) * 100);
+  
 
     return (
-        <div className={css.container}>
-        <Description />
-            <Options
-                resetFunction={resetFunction}
-                updateFeedback={updateFeedback}
-                clicks={clicks}
-                totalFeedback={totalFeedback}
-                
-            />
-            {totalFeedback ? <Feedback
-                clicks={clicks}
-                totalFeedback={totalFeedback}
-                positivePercent={positivePercent}
-            /> : <Notification />
-                
-        }
-                 
-        </div>
-        
+        <section>
+        <SearchBar 
+                onSearch={handleSearch} />
+            {loading && <Loader/>}
+            {images && <ImageGallery images={images} />}
+            {isError && <p>Whops..there are some issues</p>}
+            {images.length>0 &&<LoadMoreBtn handleSearch={ handleSearch} />}
+            </section>
     )
-}
+
+};
 
 export default App;
