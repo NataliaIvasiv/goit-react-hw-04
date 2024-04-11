@@ -1,10 +1,15 @@
-import css from './SearchBar.module.css'
+import css from './SearchBar.module.css';
+import toast from 'react-hot-toast';
+
 function SearchBar  ({onSearch}) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const topic = form.elements.search.value;
     onSearch(topic);
+    if (!topic) {
+      toast.error('You should add your query. What images would you like to see? ')
+    }
     form.reset();
     }
 

@@ -1,14 +1,10 @@
-import { useState } from "react";
-const LoadMoreBtn = ({ handleSearch }) => {
-    const [currentPage, setCurrentPage] = useState(2);
-    const handleClick = () => {
-        handleSearch(currentPage);
-        setCurrentPage(currentPage + 1)
-        console.log(currentPage)
-    }
+import css from './LoadMoreBtn.module.css'
+const LoadMoreBtn = ({ onLoadMore }) => {
+    
+   
     return (
         <div>
-            <button type="click" onClick={handleClick}>Load more</button>
+            <button className={css.loadMoreBtn} type="click" onClick={onLoadMore}>Load more</button>
         </div>
     )
 }

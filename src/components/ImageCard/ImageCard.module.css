@@ -1,5 +1,5 @@
 .imageCardRef{
-
+padding: 5px;
 }
 .imageCard{
         /* border-radius: 8px;
@@ -11,4 +11,6 @@
 .image{
     border-radius: 8px;
     width: calc((100%-60px)/4);
+    width: 320px;
+    height: 320px;
 }

@@ -1,8 +1,15 @@
 import css from './ImageCard.module.css'
-const ImageCard = ({ alt_description, id, src }) => {
+const ImageCard = ({ image, handleImageClick }) => {
+  const imageData = {
+    imageSrc: image.urls.regular,
+    imageDescription: image.description,
+    imageAltDescription: image.alt_description,
+    imageAutor: image.user.name,
+    imageLikes: image.likes,
+  };
   return (
     <div className={css.imageCard}>
-<a className={css.imageCardRef} href={src}><img className={css.image} src={src} alt={alt_description} width='320px' id={id} /></a>
+<button className={css.imageCardRef} type='click' onClick={()=>handleImageClick(imageData)}><img className={css.image} src={image.urls.small} alt={image.alt_description}  id={image.id} /></button>
 
     </div>
     
