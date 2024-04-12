@@ -5,11 +5,14 @@ function SearchBar  ({onSearch}) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
-    const topic = form.elements.search.value;
-    onSearch(topic);
-    if (!topic) {
+    const topic = form.elements.search.value.trim();
+     if (!topic) {
       toast.error('You should add your query. What images would you like to see? ')
-    }
+       return;
+     }
+    
+    onSearch(topic);
+   
     form.reset();
     }
 

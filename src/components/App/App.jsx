@@ -33,7 +33,7 @@ const App = () => {
             if (img.data.total_pages === 0) {
                 toast.error('Sorry... there are no images for your search')
             }
-            setImages([...images, ...newImages]);
+            setImages((prevImages) => prevImages.concat(newImages));
 
         }
         catch {

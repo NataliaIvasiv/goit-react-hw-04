@@ -9,7 +9,7 @@ const ImageCard = ({ image, handleImageClick }) => {
   };
   return (
     <div className={css.imageCard}>
-<button className={css.imageCardRef} type='click' onClick={()=>handleImageClick(imageData)}><img className={css.image} src={image.urls.small} alt={image.alt_description}  id={image.id} /></button>
+<img  className={css.image} src={image.urls.small} alt={image.alt_description}  id={image.id} onClick={()=>handleImageClick(imageData)}/>
 
     </div>
     
